@@ -16,7 +16,7 @@ cc.Extended_CotApp.prototype.setUtility = function (item) {
 cc.Extended_CotApp.prototype._renderUtility = function() {
 	var container = $("#app-utility");
 	if (container.length)
-		var child = container.children('div').empty().append(this.utilityItem);
+		container.children('div').empty().append(this.utilityItem);
 };
 
 cc.Extended_CotApp.prototype.render = function(onAfterRender, contentUrl) {
