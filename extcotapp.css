@@ -1,0 +1,11 @@
+#app-breadcrumb .col-xs-auto {
+	float: right;
+}
+
+#app-breadcrumb .col-xs-auto:first-child {
+	float: left;
+}
+
+#app-utility {
+	padding: 1rem;
+}
