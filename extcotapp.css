@@ -1,3 +1,8 @@
+
+strong {
+	font-weight: bold;
+}
+
 #app-breadcrumb .col-xs-auto {
 	float: right;
 }
