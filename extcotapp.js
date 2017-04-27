@@ -46,7 +46,7 @@ cc.Extended_CotApp.prototype.render = function(onAfterRender, contentUrl) {
 
 cc.Extended_CotApp.prototype.setContent = function(content) {
 	if (typeof content === 'object') {
-		cot_app.prototype.setContent.apply(this, content);
+		cot_app.prototype.setContent.call(this, content);
 		return;
 	}
 	
@@ -74,7 +74,7 @@ cc.Extended_CotApp.prototype.setContent = function(content) {
 		var content = {};
 		var $top = $dis.find('#content-top');
 		if ($top)
-			content.top = $top.html());
+			content.top = $top.html();
 		
 		var $left = $dis.find('#content-left');
 		if ($left)
