@@ -23,7 +23,6 @@ cc.Extended_CotApp.prototype.render = function(onAfterRender, contentUrl) {
 	onAfterRender = onAfterRender || function() {};
 	
 	var dis = this;
-	
 	cot_app.prototype.render.call(this, function() {
 		$('#app-breadcrumb > div.row > div.col-xs-12.hidden-xs.hidden-print')
 			.removeClass('col-xs-12')
@@ -36,49 +35,61 @@ cc.Extended_CotApp.prototype.render = function(onAfterRender, contentUrl) {
 				'</div>'
 			].join(''));
 		
-		if (contentUrl) {
-			$('<div>').load(contentUrl, function() {
-				var $dis = $(this);
-				
-				$('head').append($dis.find('style'));
-				
-				var $breadcrumb = $dis.find('#breadcrumb > li');
-				if ($breadcrumb) {
-					dis.setBreadcrumb($.map($breadcrumb, function(item, index) {
-						return { name: $(item).text(), link: $(item).find('a:first').attr('href')};
-					}), true);
-				}
-				
-				var $utility = $dis.find('#utility');
-				if ($utility)
-					dis.setUtility($utility.html());
-				
-				var $title = $dis.find('h1:first');
-				if ($title)
-					dis.setTitle($title.text());
-				
-				var $top = $dis.find('#content-top');
-				if ($top)
-					$('#app-content-top > div:first').html($top.html());
-				
-				var $left = $dis.find('#content-left');
-				if ($left)
-					$('#app-content-left > div:first').html($left.html());
-				
-				var $right = $dis.find('#content-right');
-				if ($right)
-					$('#app-content-right > div:first').html($right.html());
-				
-				var $bottom = $dis.find('#content-bottom');
-				if ($bottom)
-					$('#app-content-bottom > div:first').html($bottom.html());
-				
-				$('body').append($dis.find('script[title]'));
-			});
-		}
+		if (contentUrl)
+			dis.setContent(contentUrl);
 		
 		dis._renderUtility();
 		
 		onAfterRender();
 	});
 };
+
+cc.Extended_CotApp.prototype.setContent = function(content) {
+	if (typeof content === 'object') {
+		cot_app.prototype.setContent.apply(this, content);
+		return;
+	}
+	
+	var dis = this;
+	$('<div>').load(contentUrl, function() {
+		var $dis = $(this);
+		
+		$('head').append($dis.find('style'));
+		
+		var $breadcrumb = $dis.find('#breadcrumb > li');
+		if ($breadcrumb) {
+			dis.setBreadcrumb($.map($breadcrumb, function(item, index) {
+				return { name: $(item).text(), link: $(item).find('a:first').attr('href')};
+			}), true);
+		}
+		
+		var $utility = $dis.find('#utility');
+		if ($utility)
+			dis.setUtility($utility.html());
+		
+		var $title = $dis.find('h1:first');
+		if ($title)
+			dis.setTitle($title.text());
+		
+		var content = {};
+		var $top = $dis.find('#content-top');
+		if ($top)
+			content.top = $top.html());
+		
+		var $left = $dis.find('#content-left');
+		if ($left)
+			content.left = $left.html();
+		
+		var $right = $dis.find('#content-right');
+		if ($right)
+			content.right = $right.html();
+		
+		var $bottom = $dis.find('#content-bottom');
+		if ($bottom)
+			content.bottom = $bottom.html();
+		
+		dis.setContent(content);
+		
+		$('body').append($dis.find('script[title]'));
+	});
+}
